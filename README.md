@@ -32,17 +32,9 @@ To create `CLOUDFLARE_API_TOKEN`:
 4. Keep the permissions from that template, then add the extra Access permissions needed by this project.
 5. The final token should have this full permission list:
 
-   - `Account` -> `Workers KV Storage` -> `Edit`
    - `Account` -> `Workers Scripts` -> `Edit`
    - `Zone` -> `Workers Routes` -> `Edit`
    - `Account` -> `Account Settings` -> `Read`
-   - `Account` -> `Workers Tail` -> `Read`
-   - `Account` -> `Workers R2 Storage` -> `Edit`
-   - `Account` -> `Cloudflare Pages` -> `Edit`
-   - `Account` -> `Workers Builds Configuration` -> `Edit`
-   - `Account` -> `Workers Agents Configuration` -> `Edit`
-   - `Account` -> `Workers Observability` -> `Edit`
-   - `Account` -> `Containers` -> `Edit`
    - `Account` -> `Access: Apps` -> `Read`
    - `Account` -> `Access: Apps` -> `Edit`
    - `Account` -> `Access: Apps and Policies` -> `Read`
