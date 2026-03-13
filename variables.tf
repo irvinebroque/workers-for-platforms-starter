@@ -13,3 +13,8 @@ variable "zone_name" {
   type        = string
   description = "Cloudflare zone name used for custom domain, e.g. example.com."
 }
+
+variable "access_email_domain" {
+  type        = string
+  description = "Email domain allowed by Access policy, e.g. cloudflare.com."
+}

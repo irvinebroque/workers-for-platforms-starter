@@ -6,13 +6,16 @@
   },
   "scripts": {
     "build": "tsc --noEmit && esbuild index.ts --bundle --format=esm --outfile=build/index.js",
-    "plan": "npm run build && dotenv -e .env -- bash -c 'terraform plan -compact-warnings -var account_id=\"$CLOUDFLARE_ACCOUNT_ID\" -var cloudflare_api_token=\"$CLOUDFLARE_API_TOKEN\" -var zone_name=\"$CLOUDFLARE_ZONE_NAME\"'",
-    "deploy": "npm run build && dotenv -e .env -- bash -c 'terraform apply -compact-warnings -auto-approve -var account_id=\"$CLOUDFLARE_ACCOUNT_ID\" -var cloudflare_api_token=\"$CLOUDFLARE_API_TOKEN\" -var zone_name=\"$CLOUDFLARE_ZONE_NAME\"'"
+    "upload": "dotenv -e .env -- tsx upload.ts",
+    "plan": "npm run build && dotenv -e .env -- bash -c 'terraform plan -compact-warnings -var account_id=\"$CLOUDFLARE_ACCOUNT_ID\" -var cloudflare_api_token=\"$CLOUDFLARE_API_TOKEN\" -var zone_name=\"$CLOUDFLARE_ZONE_NAME\" -var access_email_domain=\"$COMPANY_EMAIL_DOMAIN\"'",
+    "deploy": "npm run build && dotenv -e .env -- bash -c 'terraform apply -compact-warnings -auto-approve -var account_id=\"$CLOUDFLARE_ACCOUNT_ID\" -var cloudflare_api_token=\"$CLOUDFLARE_API_TOKEN\" -var zone_name=\"$CLOUDFLARE_ZONE_NAME\" -var access_email_domain=\"$COMPANY_EMAIL_DOMAIN\"'"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250204.0",
+    "cloudflare": "^5.2.0",
     "dotenv-cli": "^8.0.0",
     "esbuild": "^0.25.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.2"
   }
 }

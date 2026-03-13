@@ -1,45 +1,14 @@
 # Workers for Platforms Terraform Starter
 
-This starter provisions a minimal Workers for Platforms setup with Terraform:
-
-- Worker: `app-gateway`
-- Worker version with a dispatch namespace binding named `APPS`
-- Deployment routing 100% of traffic to that version
-- Dispatch namespace: `apps`
-- Custom domain: `apps.<zone_name>`
-
-## Required environment variables
-
-Copy `.env.example` and fill in values:
+1. Create `.env` from `.env.example` and fill required values.
+2. Run setup to install dependencies, deploy infrastructure, upload `hello-world`, and print the app URL:
 
 ```sh
-cp .env.example .env
+./setup.sh
 ```
 
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
-- `CLOUDFLARE_ZONE_NAME`
-
-## Usage
-
-Install dependencies:
+To add more apps to the same `apps` dispatch namespace later:
 
 ```sh
-npm install
+npm run upload -- another-app
 ```
-
-Run Terraform plan:
-
-```sh
-npm run plan
-```
-
-Apply deployment:
-
-```sh
-npm run deploy
-```
-
-`npm run plan` and `npm run deploy` load values from `.env` via `dotenv-cli`.
-
-`npm run build` compiles `index.ts` into `build/index.js`, which is referenced by `cloudflare_worker_version`.
