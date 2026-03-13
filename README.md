@@ -30,13 +30,29 @@ To create `CLOUDFLARE_API_TOKEN`:
 1. Open `https://dash.cloudflare.com/?to=/:account/api-tokens`.
 2. Click `Create Token`.
 3. Start from the `Edit Cloudflare Workers` token template.
-4. Add the Access permissions this project needs:
+4. Keep the permissions from that template, then add the extra Access permissions needed by this project.
+5. The final token should have this full permission list:
+
+   - `Account` -> `Workers KV Storage` -> `Edit`
+   - `Account` -> `Workers Scripts` -> `Edit`
+   - `Zone` -> `Workers Routes` -> `Edit`
+   - `Account` -> `Account Settings` -> `Read`
+   - `Account` -> `Workers Tail` -> `Read`
+   - `Account` -> `Workers R2 Storage` -> `Edit`
+   - `Account` -> `Cloudflare Pages` -> `Edit`
+   - `Account` -> `Workers Builds Configuration` -> `Edit`
+   - `Account` -> `Workers Agents Configuration` -> `Edit`
+   - `Account` -> `Workers Observability` -> `Edit`
+   - `Account` -> `Containers` -> `Edit`
+   - `Account` -> `Access: Apps` -> `Read`
    - `Account` -> `Access: Apps` -> `Edit`
+   - `Account` -> `Access: Apps and Policies` -> `Read`
    - `Account` -> `Access: Apps and Policies` -> `Edit`
-5. In the token resources section, scope the token to the account and zone you plan to use:
-   - choose your Cloudflare account under account resources
-   - choose `Include` -> `Specific zone` -> your zone under zone resources
-6. Create the token, copy its value, and paste it into `CLOUDFLARE_API_TOKEN=` in `.env`.
+
+6. In the token resources section, scope the token to the account and zone you plan to use:
+   - under account resources, select your Cloudflare account
+   - under zone resources, select `Include` -> `Specific zone` -> your zone
+7. Create the token, copy its value, and paste it into `CLOUDFLARE_API_TOKEN=` in `.env`.
 
 This token needs access to a specific zone because the starter creates the custom hostname `apps.<your-zone>` and configures Cloudflare Access for that hostname.
 
