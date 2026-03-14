@@ -44,4 +44,4 @@ echo "Uploading app worker '$APP_NAME' to dispatch namespace 'apps'..."
 npm run upload -- "$APP_NAME"
 
 echo
-echo "Uploaded app URL: https://${APP_NAME}.apps.${CLOUDFLARE_ZONE_NAME}"
+echo "Uploaded app URL: https://${APP_NAME}.${CLOUDFLARE_ZONE_NAME}"

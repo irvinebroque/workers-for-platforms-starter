@@ -20,7 +20,7 @@ COMPANY_EMAIL_DOMAIN=your-company.com
 ```
 
 - `CLOUDFLARE_ACCOUNT_ID`: your Cloudflare account ID
-- `CLOUDFLARE_ZONE_NAME`: the DNS zone where the `*.apps` subdomains will live
+- `CLOUDFLARE_ZONE_NAME`: the DNS zone where the app subdomains will live
 - `CLOUDFLARE_API_TOKEN`: an API token with Workers and Access permissions for this setup
 - `COMPANY_EMAIL_DOMAIN`: the email domain your platform should recognize, such as `example.com`
 
@@ -45,7 +45,9 @@ To create `CLOUDFLARE_API_TOKEN`:
 
 6. Create the token, copy its value, and paste it into `CLOUDFLARE_API_TOKEN=` in `.env`.
 
-This token needs access to a specific zone because the starter creates and secures app hostnames under `*.apps.<your-zone>`.
+This token needs access to a specific zone because the starter creates and secures app hostnames under `*.<your-zone>`.
+
+This starter uses a wildcard DNS record and Workers route for `*.<your-zone>`, so app traffic is expected to live on first-level subdomains such as `hello-world.<your-zone>`.
 
 3. Run setup to bootstrap the project end-to-end:
 
@@ -61,7 +63,7 @@ This token needs access to a specific zone because the starter creates and secur
 4. Runs `terraform init` to initialize the Terraform working directory.
 5. Runs `npm run deploy` to apply the Terraform configuration and create or update the Cloudflare resources for the starter.
 6. Runs `npm run upload -- hello-world` to upload the example app worker into the shared `apps` dispatch namespace.
-7. Prints the final public URL for the uploaded app: `https://hello-world.apps.<your-zone-name>`.
+7. Prints the final public URL for the uploaded app: `https://hello-world.<your-zone-name>`.
 
 If any required environment value is missing, or if one of the setup commands fails, the script stops immediately so you can fix the issue before continuing.
 
@@ -71,7 +73,7 @@ To add more apps to the same `apps` dispatch namespace later:
 npm run upload -- another-app
 ```
 
-That app will be available at `https://another-app.apps.<your-zone-name>`.
+That app will be available at `https://another-app.<your-zone-name>`.
 
 To tear down all Terraform-managed resources:
 
