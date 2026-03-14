@@ -71,7 +71,7 @@ resource "cloudflare_workers_deployment" "app_gateway" {
 
 resource "cloudflare_dns_record" "apps_wildcard" {
   zone_id = data.cloudflare_zone.app_gateway.id
-  name    = "*.apps"
+  name    = "*"
   ttl     = 1
   type    = "A"
   content = "192.0.2.0"
@@ -80,7 +80,7 @@ resource "cloudflare_dns_record" "apps_wildcard" {
 
 resource "cloudflare_workers_route" "app_gateway" {
   zone_id    = data.cloudflare_zone.app_gateway.id
-  pattern    = "*.apps.${var.zone_name}/*"
+  pattern    = "*.${var.zone_name}/*"
   script     = cloudflare_worker.app_gateway.name
   depends_on = [cloudflare_workers_deployment.app_gateway]
 }
@@ -100,7 +100,7 @@ resource "cloudflare_zero_trust_access_policy" "app_gateway_email_otp" {
 resource "cloudflare_zero_trust_access_application" "app_gateway" {
   zone_id = data.cloudflare_zone.app_gateway.id
   name    = "app-gateway-apps"
-  domain  = "*.apps.${var.zone_name}/*"
+  domain  = "*.${var.zone_name}/*"
   type    = "self_hosted"
 
   policies = [{
