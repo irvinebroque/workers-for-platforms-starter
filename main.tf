@@ -69,13 +69,20 @@ resource "cloudflare_workers_deployment" "app_gateway" {
   }]
 }
 
-resource "cloudflare_workers_custom_domain" "app_gateway" {
-  account_id  = var.account_id
-  zone_id     = data.cloudflare_zone.app_gateway.id
-  hostname    = "apps.${var.zone_name}"
-  service     = cloudflare_worker.app_gateway.name
-  environment = "production"
-  depends_on  = [cloudflare_workers_deployment.app_gateway]
+resource "cloudflare_dns_record" "apps_wildcard" {
+  zone_id = data.cloudflare_zone.app_gateway.id
+  name    = "*.apps"
+  ttl     = 1
+  type    = "A"
+  content = "192.0.2.0"
+  proxied = true
+}
+
+resource "cloudflare_workers_route" "app_gateway" {
+  zone_id    = data.cloudflare_zone.app_gateway.id
+  pattern    = "*.apps.${var.zone_name}/*"
+  script     = cloudflare_worker.app_gateway.name
+  depends_on = [cloudflare_workers_deployment.app_gateway]
 }
 
 resource "cloudflare_zero_trust_access_policy" "app_gateway_email_otp" {
@@ -93,7 +100,7 @@ resource "cloudflare_zero_trust_access_policy" "app_gateway_email_otp" {
 resource "cloudflare_zero_trust_access_application" "app_gateway" {
   zone_id = data.cloudflare_zone.app_gateway.id
   name    = "app-gateway-apps"
-  domain  = "apps.${var.zone_name}/*"
+  domain  = "*.apps.${var.zone_name}/*"
   type    = "self_hosted"
 
   policies = [{

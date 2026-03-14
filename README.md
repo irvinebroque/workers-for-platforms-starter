@@ -20,7 +20,7 @@ COMPANY_EMAIL_DOMAIN=your-company.com
 ```
 
 - `CLOUDFLARE_ACCOUNT_ID`: your Cloudflare account ID
-- `CLOUDFLARE_ZONE_NAME`: the DNS zone where the `apps` subdomain will live
+- `CLOUDFLARE_ZONE_NAME`: the DNS zone where the `*.apps` subdomains will live
 - `CLOUDFLARE_API_TOKEN`: an API token with Workers and Access permissions for this setup
 - `COMPANY_EMAIL_DOMAIN`: the email domain your platform should recognize, such as `example.com`
 
@@ -33,6 +33,7 @@ To create `CLOUDFLARE_API_TOKEN`:
 5. The final token should have this full permission list, and it should be scoped to the account and specific zone you plan to use:
 
    - `Account` -> `Workers Scripts` -> `Edit`
+   - `Zone` -> `DNS` -> `Edit`
    - `Zone` -> `Workers Routes` -> `Edit`
    - `Account` -> `Account Settings` -> `Read`
    - `Account` -> `Access: Apps` -> `Read`
@@ -44,7 +45,7 @@ To create `CLOUDFLARE_API_TOKEN`:
 
 6. Create the token, copy its value, and paste it into `CLOUDFLARE_API_TOKEN=` in `.env`.
 
-This token needs access to a specific zone because the starter creates the custom hostname `apps.<your-zone>` and configures Cloudflare Access for that hostname.
+This token needs access to a specific zone because the starter creates and secures app hostnames under `*.apps.<your-zone>`.
 
 3. Run setup to bootstrap the project end-to-end:
 
@@ -60,7 +61,7 @@ This token needs access to a specific zone because the starter creates the custo
 4. Runs `terraform init` to initialize the Terraform working directory.
 5. Runs `npm run deploy` to apply the Terraform configuration and create or update the Cloudflare resources for the starter.
 6. Runs `npm run upload -- hello-world` to upload the example app worker into the shared `apps` dispatch namespace.
-7. Prints the final public URL for the uploaded app: `https://apps.<your-zone-name>/hello-world`.
+7. Prints the final public URL for the uploaded app: `https://hello-world.apps.<your-zone-name>`.
 
 If any required environment value is missing, or if one of the setup commands fails, the script stops immediately so you can fix the issue before continuing.
 
@@ -69,6 +70,8 @@ To add more apps to the same `apps` dispatch namespace later:
 ```sh
 npm run upload -- another-app
 ```
+
+That app will be available at `https://another-app.apps.<your-zone-name>`.
 
 To tear down all Terraform-managed resources:
 
